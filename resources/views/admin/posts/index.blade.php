@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
     <h1>Elenco post</h1>
     <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Crea un nuovo post</a>
     <table class="table table-striped">
@@ -10,6 +11,7 @@
                 <th scope="col">Titolo</th>
                 <th scope="col">Data</th>
                 <th scope="col">Tempo di lettura</th>
+                <th scope="col">Categoria</th>
                 <th scope="col">Azioni</th>
             </tr>
         </thead>
@@ -19,7 +21,8 @@
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->date }}</td>
-                    <td>{{ $post->reading_time }} min</td>
+                    <td>{{ $post->reading_time }}</td>
+                    <td>{{ $post->category?->name ?? '-'}}</td>
                     <td>
                         <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i>Visualizza</a>
                         <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Modifica</a>
