@@ -13,6 +13,6 @@
     </div>
     <p>Data di creazione: {{ Helper::formatDate($post->date) }}</p>
     <p>Tempo di lettura previsti: {{ $post->reading_time }} min</p>
-    <p>{{ $post->text }}</p>
+    <p>{!! $post->text !!}</p>
 
 @endsection
