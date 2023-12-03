@@ -46,7 +46,10 @@
                 <img width="150" src="/img/placeholder.png" id="thumb" src="{{ asset('storage/' . $post?->image) }}">
             </div>
             <div class="form-floating mb-5">
-                <textarea onerror="this.src='/img/placeholder.png'" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Inserisci il testo del post')" name="text" class="form-control" placeholder="Testo del post" id="text" name="text" style="height: 200px">{{ old('text',$post?->text)  }}</textarea>
+                <textarea id="text" class="form-control" name="text" style="height: 200px">{{ old('text',$post?->text)  }}</textarea>
+                @error('text')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
                 <label for="text">Testo del post</label>
                 @error('text')
                     <p class="text-danger">{{ $message }}</p>
@@ -61,6 +64,12 @@
 </div>
 
 <script>
+    ClassicEditor
+        .create(document.querySelector('#text'))
+        .catch(error => {
+            console.error(error);
+        });
+
     function showImage(event) {
         const image = document.getElementById('image');
 

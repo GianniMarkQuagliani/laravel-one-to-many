@@ -6,25 +6,31 @@ header{
 
 .main-wrapper{
     height: calc(100vh - 60px);
-    .from-hidden{
+    .form-hidden{
         width: 100%;
         border: none;
-        a:focus{
-            border: none;
+        &:focus{
+            border:none;
             outline: none;
         }
     }
+}
 
-    aside{
-        width: 250px;
-        height: 100%;
-        ul{
-            list-style: none;
-            padding-top: 30px;
-            a{
-                color: white;
-                text-decoration: none;
-                text-align: left;
+.ck-editor__editable[role="textbox"] {
+    min-height: 300px;
+}
+
+aside{
+    width: 250px;
+    height: 100%;
+    ul{
+        list-style: none;
+        padding-top:30px;
+        a{
+            color:white;
+            text-decoration: none;
+            &:hover{
+                text-decoration: underline;
             }
         }
     }
