@@ -45,14 +45,14 @@
                     @foreach ($categories as $category)
                     <tr>
                         <td>
-                            <form id="form-edit" action="{{ route('admin.categories.update', $category) }} "method="POST">
+                            <form id="form-edit-{{ $category->id }}" action="{{ route('admin.categories.update', $category) }} "method="POST">
                                 @csrf
                                 @method('PUT')
                                 <input type="text" class="from-hidden" value="{{ $category->name }}" name="name">
                             </form>
                         </td>
                         <td>
-                            <button onclick="submitForm()" class="btn btn-warning" type="submit" id="button-addon2"><i class="fa-solid fa-pencil"></button>
+                            <button onclick="submitForm({{ $category->id }})" class="btn btn-warning" type="submit" id="button-addon2"><i class="fa-solid fa-pencil"></button>
                             @include('admin.partials.form', [
                                 'route' => route('admin.categories.destroy', $category),
                                 'message' => 'Sei sicuro di voler eliminare?'
@@ -68,8 +68,8 @@
     </div>
 
     <script>
-        function submitForm(event) {
-            const form = document.getElementById('form-edit');
+        function submitForm(id) {
+            const form = document.getElementById('form-edit-' + id);
             form.submit();
         }
     </script>

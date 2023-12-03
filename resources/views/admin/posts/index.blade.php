@@ -23,6 +23,10 @@
                     <td>
                         <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i>Visualizza</a>
                         <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Modifica</a>
+                        @include('admin.partials.form', [
+                            'route' => route('admin.posts.destroy', $post),
+                            'message' => 'Sei sicuro di voler eliminare?'
+                        ])
                     </td>
                 </tr>
             @endforeach

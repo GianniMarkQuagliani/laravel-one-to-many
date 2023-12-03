@@ -39,17 +39,14 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Immagine</label>
-                <input
-                  id="image" class="form-control @error('image') is-invalid @enderror" name="image" type="file" value="{{ old('image', $post?->image) }}">
+                <input onchange="showImage(event)" id="image" class="form-control @error('image') is-invalid @enderror" name="image" type="file" value="{{ old('image', $post?->image) }}">
                 @error('image')
                     <p class="text-danger">{{ $image }}</p>
                 @enderror
-                @if ($post)
-                <img width="150" src="{{ asset('storage/' . $post->image) }}"  />
-                @endif
+                <img width="150" src="/img/placeholder.png" id="thumb" src="{{ asset('storage/' . $post?->image) }}">
             </div>
             <div class="form-floating mb-5">
-                <textarea class="form-control" placeholder="Testo del post" id="text" name="text" style="height: 200px">{{ old('text',$post?->text)  }}</textarea>
+                <textarea onerror="this.src='/img/placeholder.png'" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Inserisci il testo del post')" name="text" class="form-control" placeholder="Testo del post" id="text" name="text" style="height: 200px">{{ old('text',$post?->text)  }}</textarea>
                 <label for="text">Testo del post</label>
                 @error('text')
                     <p class="text-danger">{{ $message }}</p>
@@ -63,4 +60,14 @@
     </div>
 </div>
 
+<script>
+    function showImage(event) {
+        const image = document.getElementById('image');
+
+        thumb.src = URL.createObjectURL(event.target.files[0]);
+        thumb.onload = function() {
+            URL.revokeObjectURL(thumb.src);
+        }
+    }
+</script>
 @endsection
