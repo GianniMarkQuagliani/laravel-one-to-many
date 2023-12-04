@@ -16,6 +16,9 @@
             <li class="mb-3">
               <a href="{{ route('admin.categories.index') }}"><i class="fa-solid fa-layer-group"></i> Elenco Categorie</a>
             </li>
+            <li class="mb-3">
+                <a href="{{ route('admin.category-post') }}"><i class="fa-solid fa-layer-group"></i> Elenco Post per categoria</a>
+            </li>
         </ul>
     </nav>
 </aside>
