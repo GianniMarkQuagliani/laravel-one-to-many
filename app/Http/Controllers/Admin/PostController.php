@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Http\Requests\PostRequest;
 use App\Functions\Helper;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -16,9 +17,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $posts = Post::orderBy('id', 'desc')->paginate(20);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -33,7 +34,8 @@ class PostController extends Controller
         $method = 'POST';
         $route = route('admin.posts.store');
         $post = null;
-        return view('admin.posts.create-edit', compact('title','method', 'route', 'post'));
+        $categories = Category::all();
+        return view('admin.posts.create-edit', compact('title','method', 'route', 'post', 'categories'));
     }
 
     /**
@@ -82,8 +84,9 @@ class PostController extends Controller
     {
         $title = 'Modifica post';
         $method = 'PUT';
-        $route = route('admin.posts.update', $post->id);
-        return view('admin.posts.create-edit', compact('title','method', 'route', 'post'));
+        $route = route('admin.posts.update', $post);
+        $categories = Category::all();
+        return view('admin.posts.create-edit', compact('title','method', 'route', 'post', 'categories'));
     }
 
     /**

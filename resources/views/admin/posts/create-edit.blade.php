@@ -11,11 +11,8 @@
         <li>{{ $error }}</li>
         @endforeach
     </ul>
-
 </div>
 @endif
-
-
 
 <div class="row">
     <div class="col-8">
@@ -24,12 +21,24 @@
             @method($method)
             <div class="mb-3">
                 <label for="title" class="form-label">Titolo post *</label>
-                <input id="title" class="form-control @error('title') is-invalid @enderror" name="title" type="text" value="{{ old('title', $post?->title) }}"
-                >
+                <input id="title" class="form-control @error('title') is-invalid @enderror" name="title" type="text" value="{{ old('title', $post?->title) }}">
                 @error('title')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
+
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Categoria</label>
+                <option value="" >Selezionare una categoria</option>
+                <select class="form-select" id="category_id" name="category_id">
+                    @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    @if ($category->id === old('category_id', $post?->category?->id)) selected @endif>{{ $category->name }}
+                </option>
+                @endforeach
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label for="reading_time" class="form-label">Tempo di lettura</label>
                 <input id="reading_time" class="form-control @error('reading_time') is-invalid @enderror" name="reading_time" type="number" value="{{ old('reading_time', $post?->reading_time) }}">
