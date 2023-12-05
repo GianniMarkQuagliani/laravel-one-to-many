@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
     Route::get('category-post', [CategoryController::class, 'categoryPost'])->name('category-post');
+    Route::get('post-tag/{tag}', [TagController::class, 'postsTags'])->name('post-tag');
 });
 
 require __DIR__.'/auth.php';

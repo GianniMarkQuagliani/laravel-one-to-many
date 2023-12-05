@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -15,6 +17,12 @@ class TagController extends Controller
     public function index()
     {
         //
+    }
+
+    public function postsTags(Tag $tag)
+    {
+        $post = $tag->posts;
+        return view('admin.tags.postsTags', compact('post', 'tag'));
     }
 
     /**

@@ -26,7 +26,9 @@
                     <td>{{ $post->category?->name ?? '-'}}</td>
                     <td>
                         @forelse ($post->tags as $tag)
-                        <span class="badge text-bg-info">{{ $tag->name }}</span>
+
+                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.post-tag', $tag) }}">{{ $tag->name }}</a>
+
                         @empty
                             -
                         @endforelse
