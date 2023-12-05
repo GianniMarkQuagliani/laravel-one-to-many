@@ -25,6 +25,7 @@ class PostRequest extends FormRequest
             'title' => 'required|min:2|max:20',
             'reading_time' => 'numeric|max:60',
             'text' => 'required|min:5',
+            'image' => 'image|mines:jpeg,png,jpg|max:2048',
         ];
     }
 

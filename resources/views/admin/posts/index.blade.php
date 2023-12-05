@@ -7,7 +7,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">
+                    <a href="{{ route('admin.orderBy', ['direction' => $direction, 'column' => 'id']) }}" class="text-decoration-none">ID</a>
+                </th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Data</th>
                 <th scope="col">Tempo di lettura</th>
@@ -27,10 +29,11 @@
                     <td>
                         @forelse ($post->tags as $tag)
 
-                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.post-tag', $tag) }}">{{ $tag->name }}</a>
+                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.post-tag', $tag) }}">{{ $tag->name }}</a>{{$tag->pivot->vote}}
 
                         @empty
-                            -
+                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.no-tags', $tag) }}">NO TAGS</a>
+
                         @endforelse
                     </td>
                     <td>

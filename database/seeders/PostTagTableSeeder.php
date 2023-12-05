@@ -18,7 +18,7 @@ class PostTagTableSeeder extends Seeder
             $post = Post::inRandomOrder()->first();
             $tag_id = Tag::inRandomOrder()->first()->id;
 
-            $post->tags()->attach($tag_id);
+            $post->tags()->attach($tag_id,['vote' => rand(0, 10)]);
         }
     }
 }

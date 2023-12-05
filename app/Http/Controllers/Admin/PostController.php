@@ -10,6 +10,7 @@ use App\Functions\Helper;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends Controller
 {
@@ -20,10 +21,44 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (isset($_GET['toSearch'])) {
+            $posts = Post::where('title', 'LIKE', '%' . $_GET['toSearch'] . '%')->paginate(10);
+        } else {
+            $posts = Post::orderBy('id', 'desc')->paginate(20);
+        }
+
+        $direction = 'desc';
+
+        $toSearch = '';
         $posts = Post::orderBy('id', 'desc')->paginate(20);
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', compact('posts', 'direction', 'toSearch'));
     }
 
+    public function orderBy($direction, $column)
+    {
+        $direction = $direction == 'desc' ? 'asc' : 'desc';
+        $posts = Post::orderBy($column, $direction)->paginate(20);
+        $toSearch = '';
+        return view('admin.posts.index', compact('posts', 'direction', 'toSearch'));
+
+    }
+
+    public function noTags(){
+
+        $posts = Post::whereNotIn('id', function (Builder $query) {
+            $query->select('post_id')->from('post_tag');
+        })->paginate(20);
+        $direction = 'desc';
+        return view('admin.posts.index', compact('posts', 'direction'));
+    }
+
+    public function search(Request $request)
+    {
+        $toSearch = $request;
+        $posts = Post::where('title', 'LIKE', '%' . $toSearch . '%')->paginate(10);
+        $direction = 'desc';
+        return view('admin.posts.index', compact('posts', 'toSearch', 'direction'));
+    }
     /**
      * Show the form for creating a new resource.
      *
