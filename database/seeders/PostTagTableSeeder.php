@@ -17,6 +17,8 @@ class PostTagTableSeeder extends Seeder
         for ($i = 0; $i < 110; $i++) {
             $post = Post::inRandomOrder()->first();
             $tag_id = Tag::inRandomOrder()->first()->id;
+
+            $post->tags()->attach($tag_id);
         }
     }
 }
