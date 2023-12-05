@@ -40,6 +40,24 @@
             </div>
 
             <div class="mb-3">
+                <div class="btn-group" role="group" aria-label="Tags">
+
+                    @foreach ($tags as $tag)
+                    <input id="tag_{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}" type="checkbox" class="btn-check" autocomplete="off"
+
+                    @if (($errors->any() && in_array($tag->id, old('tags', [])))
+                    || ($post?->tags->contains('id', $tag->id)))
+                    checked
+                    @endif
+
+                    >
+                    <label class="btn btn-outline-primary" for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
+                    @endforeach
+
+                </div>
+            </div>
+
+            <div class="mb-3">
                 <label for="reading_time" class="form-label">Tempo di lettura</label>
                 <input id="reading_time" class="form-control @error('reading_time') is-invalid @enderror" name="reading_time" type="number" value="{{ old('reading_time', $post?->reading_time) }}">
                 @error('reading_time')

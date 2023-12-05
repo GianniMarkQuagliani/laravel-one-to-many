@@ -9,6 +9,7 @@ use App\Http\Requests\PostRequest;
 use App\Functions\Helper;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -35,7 +36,8 @@ class PostController extends Controller
         $route = route('admin.posts.store');
         $post = null;
         $categories = Category::all();
-        return view('admin.posts.create-edit', compact('title','method', 'route', 'post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create-edit', compact('title', 'method', 'route', 'post', 'categories', 'tags'));
     }
 
     /**
@@ -55,9 +57,15 @@ class PostController extends Controller
             $form_data['image_original_name'] = $request->file('image')->getClientOriginalName();
             $form_data['image'] = Storage::put('uploads', $form_data['image']);
 
+
+
         }
 
         $new_post = Post::create($form_data);
+
+        if(array_key_exists('tags', $form_data)) {
+            $new_post->tags()->attach($form_data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $new_post);
 
@@ -86,7 +94,8 @@ class PostController extends Controller
         $method = 'PUT';
         $route = route('admin.posts.update', $post);
         $categories = Category::all();
-        return view('admin.posts.create-edit', compact('title','method', 'route', 'post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create-edit', compact('title','method', 'route', 'post', 'categories', 'tags'));
     }
 
     /**
@@ -117,6 +126,12 @@ class PostController extends Controller
         $form_data['date'] = date('Y-m-d');
 
         $post->update($form_data);
+
+        if(array_key_exists('tags', $form_data)) {
+            $post->tags()->sync($form_data['tags']);
+        }else{
+            $post->tags()->detach();
+        }
         return redirect()->route('admin.posts.show', $post);
     }
 
