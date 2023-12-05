@@ -12,6 +12,7 @@
                 <th scope="col">Data</th>
                 <th scope="col">Tempo di lettura</th>
                 <th scope="col">Categoria</th>
+                <th scope="col">Tag</th>
                 <th scope="col">Azioni</th>
             </tr>
         </thead>
@@ -23,6 +24,13 @@
                     <td>{{ $post->date }}</td>
                     <td>{{ $post->reading_time }}</td>
                     <td>{{ $post->category?->name ?? '-'}}</td>
+                    <td>
+                        @forelse ($post->tags as $tag)
+                        <span class="badge text-bg-info">{{ $tag->name }}</span>
+                        @empty
+                            -
+                        @endforelse
+                    </td>
                     <td>
                         <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i>Visualizza</a>
                         <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Modifica</a>
