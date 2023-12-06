@@ -10,7 +10,7 @@ use App\Functions\Helper;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 
 class PostController extends Controller
 {
@@ -30,7 +30,6 @@ class PostController extends Controller
         $direction = 'desc';
 
         $toSearch = '';
-        $posts = Post::orderBy('id', 'desc')->paginate(20);
         return view('admin.posts.index', compact('posts', 'direction', 'toSearch'));
     }
 
@@ -54,8 +53,8 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        $toSearch = $request;
-        $posts = Post::where('title', 'LIKE', '%' . $toSearch . '%')->paginate(10);
+        $toSearch = $request->toSearch;
+        $posts = Post::where('title', 'LIKE', '%' . $toSearch . '%')->paginate(20);
         $direction = 'desc';
         return view('admin.posts.index', compact('posts', 'toSearch', 'direction'));
     }

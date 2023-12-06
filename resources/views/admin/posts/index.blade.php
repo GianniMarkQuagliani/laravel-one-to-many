@@ -32,7 +32,7 @@
                         <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.post-tag', $tag) }}">{{ $tag->name }}</a>{{$tag->pivot->vote}}
 
                         @empty
-                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.no-tags', $tag) }}">NO TAGS</a>
+                        <a class="badge text-bg-info text-white text-decoration-none " href="{{ route('admin.noTags') }}">NO TAGS</a>
 
                         @endforelse
                     </td>

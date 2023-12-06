@@ -21,8 +21,7 @@ class TagController extends Controller
 
     public function postsTags(Tag $tag)
     {
-        $post = $tag->posts;
-        return view('admin.tags.postsTags', compact('post', 'tag'));
+        return view('admin.tags.postTags', compact('tag'));
     }
 
     /**
